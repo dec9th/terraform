@@ -55,7 +55,7 @@ POLICY
 
 }
 
-resource "aws_transfer_user" "sftp_user" {
+resource "aws_transfer_user" "sftp_user_SANTA" {
   server_id = "${aws_transfer_server.sftp_server.id}"
   user_name = "santa"
   role      = "${aws_iam_role.sftp-role.arn}"
@@ -69,3 +69,16 @@ resource "aws_transfer_user" "sftp_user" {
      target = "/${aws_s3_bucket.s3_bucket.id}"
   }
 }
+
+resource "aws_transfer_ssh_key" "transfer_ssh_key_SANTA" {
+  server_id = "${aws_transfer_server.sftp_server.id}"
+  user_name = aws_transfer_user.sftp_user_SANTA.user_name
+  body      = "${var.transfer_ssh_key_SANTA}"
+  
+  lifecycle {
+    ignore_changes = all
+  }
+  
+  depends_on = [aws_transfer_user.sftp_user_SANTA]
+}
+
