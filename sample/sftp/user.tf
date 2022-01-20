@@ -57,7 +57,7 @@ POLICY
 
 resource "aws_transfer_user" "sftp_user_SANTA" {
   server_id = "${aws_transfer_server.sftp_server.id}"
-  user_name = "santa"
+  user_name = lower("SANTA")
   role      = "${aws_iam_role.sftp-role.arn}"
   
 #   home_directory_type ="PATH"
