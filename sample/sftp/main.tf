@@ -51,9 +51,7 @@ resource "aws_transfer_server" "sftp_server" {
   protocols               = ["SFTP"]
   identity_provider_type  = "SERVICE_MANAGED"
   security_policy_name    = "TransferSecurityPolicy-2020-06"
-  
-  # you must put a role for logging!!!
-  # logging_role            = ""
+  logging_role            = "arn:aws:iam::${var.account_id}:role/service-role/AWSTransferLoggingAccess"
   
   endpoint_details {
     vpc_id                  = var.vpc_id 
